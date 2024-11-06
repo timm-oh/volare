@@ -2,7 +2,7 @@ ARG DEBIAN_VERSION=bookworm-20241016-slim
 ARG BUILDER_IMAGE="hexpm/elixir:1.17.3-erlang-27.1.2-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
-FROM $BUILDER_IMAGE as builder
+FROM $BUILDER_IMAGE AS builder
 
 # Build Args
 ARG PHOENIX_VERSION=1.7.10
@@ -56,7 +56,7 @@ ENTRYPOINT ["entrypoint.sh"]
 
 CMD mix phx.server
 
-FROM $RUNNER_IMAGE as app
+FROM $RUNNER_IMAGE AS app
 ARG DEBIAN_FRONTEND="noninteractive"
 ENV LANG=en_US.UTF-8 \
     LANGUAGE=en_US:en \
@@ -65,7 +65,7 @@ ENV LANG=en_US.UTF-8 \
 
 RUN apt-get update -qq  \
     && apt-get install -yq --no-install-recommends \
-    libstdc++6 openssl libncurses5 locales \
+    libstdc++6 openssl libncurses5 locales ca-certificates \
     && apt-get clean \
     && rm -rf /var/cache/apt/archives/* \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -74,8 +74,11 @@ RUN apt-get update -qq  \
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
 
 WORKDIR /app
+RUN chown nobody /app
 
-COPY --from=builder /app/_build/prod/rel/volare ./
-COPY --from=builder /app/rel ./rel
+COPY --from=builder --chown=nobody:root /app/_build/prod/rel/volare ./
+COPY --from=builder --chown=nobody:root /app/rel ./rel
+
+USER nobody
 
 CMD /app/bin/server

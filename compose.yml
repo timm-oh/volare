@@ -34,5 +34,9 @@ services:
       test: pg_isready -U postgres -h 127.0.0.1
       interval: 5s
 
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run --token --url localhost:4000/
+
 volumes:
    pgdata:
