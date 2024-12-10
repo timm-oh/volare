@@ -6,6 +6,7 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :volare, VolareWeb.Endpoint, cache_static_manifest: "priv/static/cache_manifest.json"
+plug Plug.Static, gzip: true
 
 # Configures Swoosh API Client
 config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: Volare.Finch

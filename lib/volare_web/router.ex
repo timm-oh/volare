@@ -18,6 +18,9 @@ defmodule VolareWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/auth/revolut/callback", Auth.RevolutController, :callback
+    get "/revolut/jwk", RevolutController, :jwk
+    get "/revolut/payments", RevolutController, :create
   end
 
   # Other scopes may use custom stacks.

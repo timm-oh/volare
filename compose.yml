@@ -10,6 +10,8 @@ services:
     environment:
       DATABASE_URL: postgres://postgres:postgres@db:5432/volare_dev
       SECRET_KEY_BASE: cQ3VLNX5nkxRgQC4idmVfHYnzf51KkFFp4ACZuIBT61in2cWWbWpkEYDx2RQiPFz
+      PHX_HOST: timm_oh.volareee.com
+      PORT: 4000
     ports:
       - '4000:4000'
     depends_on:
@@ -33,10 +35,6 @@ services:
     healthcheck:
       test: pg_isready -U postgres -h 127.0.0.1
       interval: 5s
-
-  tunnel:
-    image: cloudflare/cloudflared:latest
-    command: tunnel --no-autoupdate run --token --url localhost:4000/
 
 volumes:
    pgdata:
