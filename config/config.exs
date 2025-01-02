@@ -9,7 +9,8 @@ import Config
 
 config :volare,
   ecto_repos: [Volare.Repo],
-  generators: [timestamp_type: :utc_datetime]
+  generators: [timestamp_type: :utc_datetime],
+  migration_primary_key: [type: :uuid]
 
 # Configures the endpoint
 config :volare, VolareWeb.Endpoint,

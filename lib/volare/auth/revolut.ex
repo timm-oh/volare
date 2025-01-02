@@ -23,10 +23,11 @@ defmodule Volare.Auth.Revolut do
           "code" => code,
           "client_id" => client_id(),
           "scope" => "payments"
-        }
+        },
+        connect_options: connect_options()
       )
 
-    %{access_token: body["id_token"]}
+    %{access_token: body["access_token"]}
   end
 
   def kid do
