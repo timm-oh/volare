@@ -10,7 +10,6 @@ services:
     environment:
       DATABASE_URL: postgres://postgres:postgres@db:5432/volare_dev
       SECRET_KEY_BASE: cQ3VLNX5nkxRgQC4idmVfHYnzf51KkFFp4ACZuIBT61in2cWWbWpkEYDx2RQiPFz
-      PHX_HOST: timm_oh.volareee.com
       PORT: 4000
     ports:
       - '4000:4000'
